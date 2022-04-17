@@ -24,7 +24,7 @@ const ProductItem:React.FC<ProductItemProps> = props => {
     <div>
       <img style={imageStyle} src={touristRoutePictures[0].url} alt='' />
       <span>{title.slice(0, 25)}</span>
-      <span>{price}</span>
+      <span style={{color: 'red'}}>￥{price}</span>
     </div>
   )
 }
