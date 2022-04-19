@@ -1,4 +1,5 @@
-import {AnyAction, Reducer} from 'redux';
+import {Reducer} from 'redux';
+import {ChangeLanguageAction} from './languageActions';
 
 type Language = {
   name: string;
@@ -22,7 +23,7 @@ const defaultLanguageState: LanguageState = {
     }
   ]
 }
-const languageReducer: Reducer<LanguageState, AnyAction> = (state = defaultLanguageState, action) => {
+const languageReducer: Reducer<LanguageState, ChangeLanguageAction> = (state = defaultLanguageState, action) => {
   switch (action.type) {
     case 'CHANGE_LANGUAGE':
       return {...state, language: action.payload};

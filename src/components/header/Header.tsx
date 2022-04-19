@@ -7,6 +7,7 @@ import styles from './Header.module.scss';
 import logo from '../../assets/logo.svg';
 import {useNavigate} from 'react-router-dom';
 import { languageStore } from '../../redux/store';
+import { changeLanguageActionCreator } from '../../redux/language/languageActions';
 
 const { Search } = Input;
 const mainMenuList = [
@@ -33,21 +34,20 @@ export const Header:React.FC = (props) => {
     })
   })
 
-  const changeLanguage = (value: string) => {
-    languageStore.dispatch({
-      type: 'CHANGE_LANGUAGE',
-      payload: value
-    })
+  const changeLanguage = (value: 'zh' | 'en') => {
+    languageStore.dispatch(changeLanguageActionCreator(value));
   }
+
   const languageMenu = (
     <Menu>
       {
-        state.languageList.map((item) => (
-          <Menu.Item key={item.code} onClick={() => changeLanguage(item.code)}>{item.name}</Menu.Item>
+        state.languageList.map(({code, name}) => (
+          <Menu.Item key={code} onClick={() => changeLanguage(code as 'zh' | 'en')}>{name}</Menu.Item>
         ))
       }
     </Menu>
-  );
+  )
+
   return (
     <div>
       {/*  一级顶部栏 */}
