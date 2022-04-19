@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Button, Dropdown, Input, Layout, Menu,
 } from 'antd';
@@ -6,14 +6,9 @@ import { GlobalOutlined } from '@ant-design/icons';
 import styles from './Header.module.scss';
 import logo from '../../assets/logo.svg';
 import {useNavigate} from 'react-router-dom';
+import { languageStore } from '../../redux/store';
 
 const { Search } = Input;
-const languageMenu = (
-  <Menu>
-    <Menu.Item key={1}>中文</Menu.Item>
-    <Menu.Item key={2}>English</Menu.Item>
-  </Menu>
-);
 const mainMenuList = [
   '旅游首页',
   '周末游',
@@ -29,15 +24,37 @@ const mainMenuList = [
 
 export const Header:React.FC = (props) => {
   const navigate = useNavigate();
+  const [state, setState] = useState({...languageStore.getState()});
 
-  console.log(props);
+  languageStore.subscribe(() => {
+    setState({
+      ...state,
+      language: languageStore.getState().language,
+    })
+  })
+
+  const changeLanguage = (value: string) => {
+    languageStore.dispatch({
+      type: 'CHANGE_LANGUAGE',
+      payload: value
+    })
+  }
+  const languageMenu = (
+    <Menu>
+      {
+        state.languageList.map((item) => (
+          <Menu.Item key={item.code} onClick={() => changeLanguage(item.code)}>{item.name}</Menu.Item>
+        ))
+      }
+    </Menu>
+  );
   return (
     <div>
       {/*  一级顶部栏 */}
       <Layout.Header className={styles['top-header']}>
         <span>让旅游更幸福</span>
         <Dropdown.Button className={styles['language-select']} overlay={languageMenu} icon={<GlobalOutlined />}>
-          语言
+          {state.languageList.find((item) => item.code === state.language)?.name}
         </Dropdown.Button>
         <div className={styles['btn-group']}>
           <Button onClick={() => navigate('/sign')}>登录</Button>
