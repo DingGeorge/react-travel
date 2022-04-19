@@ -5,6 +5,7 @@ import {
 import { GlobalOutlined } from '@ant-design/icons';
 import styles from './Header.module.scss';
 import logo from '../../assets/logo.svg';
+import {useNavigate} from 'react-router-dom';
 
 const { Search } = Input;
 const languageMenu = (
@@ -27,6 +28,8 @@ const mainMenuList = [
 ];
 
 export const Header:React.FC = (props) => {
+  const navigate = useNavigate();
+
   console.log(props);
   return (
     <div>
@@ -37,8 +40,8 @@ export const Header:React.FC = (props) => {
           语言
         </Dropdown.Button>
         <div className={styles['btn-group']}>
-          <Button>登录</Button>
-          <Button>注册</Button>
+          <Button onClick={() => navigate('/sign')}>登录</Button>
+          <Button onClick={() => navigate('/register')}>注册</Button>
         </div>
       </Layout.Header>
       {/*  二级顶部栏 */}
