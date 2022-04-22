@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Button, Dropdown, Input, Layout, Menu,
 } from 'antd';
@@ -6,10 +6,8 @@ import { GlobalOutlined } from '@ant-design/icons';
 import styles from './Header.module.scss';
 import logo from '../../assets/logo.svg';
 import {useNavigate} from 'react-router-dom';
+import { languageStore } from '../../redux/store';
 import { changeLanguageActionCreator } from '../../redux/language/languageActions';
-
-import { useSelector } from '../../redux/hooks';
-import { useDispatch } from 'react-redux';
 
 const { Search } = Input;
 const mainMenuList = [
@@ -27,19 +25,23 @@ const mainMenuList = [
 
 export const Header:React.FC = (props) => {
   const navigate = useNavigate();
+  const [state, setState] = useState({...languageStore.getState()});
 
-  const { language, languageList }= useSelector(state => state);
-  const dispatch = useDispatch();
-
+  languageStore.subscribe(() => {
+    setState({
+      ...state,
+      language: languageStore.getState().language,
+    })
+  })
 
   const changeLanguage = (value: 'zh' | 'en') => {
-    dispatch(changeLanguageActionCreator(value));
+    languageStore.dispatch(changeLanguageActionCreator(value));
   }
 
   const languageMenu = (
     <Menu>
       {
-        languageList.map(({code, name}) => (
+        state.languageList.map(({code, name}) => (
           <Menu.Item key={code} onClick={() => changeLanguage(code as 'zh' | 'en')}>{name}</Menu.Item>
         ))
       }
@@ -52,7 +54,7 @@ export const Header:React.FC = (props) => {
       <Layout.Header className={styles['top-header']}>
         <span>让旅游更幸福</span>
         <Dropdown.Button className={styles['language-select']} overlay={languageMenu} icon={<GlobalOutlined />}>
-          {languageList.find((item) => item.code === language)?.name}
+          {state.languageList.find((item) => item.code === state.language)?.name}
         </Dropdown.Button>
         <div className={styles['btn-group']}>
           <Button onClick={() => navigate('/sign')}>登录</Button>
