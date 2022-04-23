@@ -1,5 +1,6 @@
 export const sideMenuList = [
   {
+    id: '1',
     title: "主题旅游",
     subMenu: [
       {
@@ -17,6 +18,7 @@ export const sideMenuList = [
     ],
   },
   {
+    id: '2',
     title: "周边游",
     subMenu: [
       {
@@ -30,6 +32,7 @@ export const sideMenuList = [
     ],
   },
   {
+    id: '3',
     title: "国内游",
     subMenu: [
       {
@@ -47,6 +50,7 @@ export const sideMenuList = [
     ],
   },
   {
+    id: '4',
     title: "东南亚",
     subMenu: [
       {
@@ -60,6 +64,7 @@ export const sideMenuList = [
     ],
   },
   {
+    id: '5',
     title: "欧洲",
     subMenu: [
       {

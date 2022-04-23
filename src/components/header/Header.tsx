@@ -28,7 +28,7 @@ const mainMenuList = [
 export const Header:React.FC = (props) => {
   const navigate = useNavigate();
 
-  const { language, languageList }= useSelector(state => state);
+  const { language, languageList }= useSelector(state => state.language);
   const dispatch = useDispatch();
 
 

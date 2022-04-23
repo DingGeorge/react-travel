@@ -5,12 +5,12 @@ import 'antd/dist/antd.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { languageStore } from './redux/store';
+import { RootStore } from './redux/store';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
-  <Provider store={languageStore}>
+  <Provider store={RootStore}>
     <App />
   </Provider>,
 );
